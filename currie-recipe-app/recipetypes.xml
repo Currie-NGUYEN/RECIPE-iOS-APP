@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<catalog>
+    <type id= "1">
+        <name>Breads, Muffins, Scones</name>
+    </type>
+    <type id= "2">
+        <name>Dinner</name>
+    </type>
+    <type id= "3">
+        <name>Dips, Salad Dressings, Salsas, and Sauces</name>
+    </type>
+    <type id= "4">
+        <name>Drinks</name>
+    </type>
+    <type id= "5">
+        <name>Breakfast</name>
+    </type>
+    <type id= "6">
+        <name>Desserts</name>
+    </type>
+    <type id= "7">
+        <name>Lunch</name>
+    </type>
+    <type id= "8">
+        <name>Main Courses</name>
+    </type>
+    <type id= "9">
+        <name>One Pot Meal</name>
+    </type>
+    <type id= "10">
+        <name>Pancakes and Toppings</name>
+    </type>
+    <type id= "11">
+        <name>Pizza</name>
+    </type>
+    <type id= "12">
+        <name>Quesadillas and Sandwiches</name>
+    </type>
+    <type id= "13">
+        <name>Salads</name>
+    </type>
+    <type id= "14">
+        <name>Side Dishes</name>
+    </type>
+    <type id= "15">
+        <name>Snacks</name>
+    </type>
+    <type id= "16">
+        <name>Soups, Stews, Chili</name>
+    </type>
+</catalog>

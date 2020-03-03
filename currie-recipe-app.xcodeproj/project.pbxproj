@@ -7,23 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C41DBE6D240D57C40064EAC0 /* Recipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41DBE6C240D57C40064EAC0 /* Recipe.swift */; };
 		C43F527E240D1897001293C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F527D240D1897001293C9 /* AppDelegate.swift */; };
 		C43F5280240D1897001293C9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F527F240D1897001293C9 /* SceneDelegate.swift */; };
-		C43F5282240D1897001293C9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F5281240D1897001293C9 /* ViewController.swift */; };
 		C43F5285240D1897001293C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43F5283240D1897001293C9 /* Main.storyboard */; };
 		C43F5287240D189A001293C9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C43F5286240D189A001293C9 /* Assets.xcassets */; };
 		C43F528A240D189A001293C9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43F5288240D189A001293C9 /* LaunchScreen.storyboard */; };
+		C43F5292240D1C2C001293C9 /* recipetypes.xml in Resources */ = {isa = PBXBuildFile; fileRef = C43F5291240D1C2C001293C9 /* recipetypes.xml */; };
+		C43F5297240D23EA001293C9 /* ItemTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F5296240D23EA001293C9 /* ItemTableViewCell.swift */; };
+		C43F5299240D2419001293C9 /* ItemTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C43F5298240D2419001293C9 /* ItemTableViewCell.xib */; };
+		C43F529B240D30D8001293C9 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F529A240D30D8001293C9 /* DetailViewController.swift */; };
+		C43F529D240D36F0001293C9 /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F529C240D36F0001293C9 /* EditViewController.swift */; };
+		C43F529F240D3ACE001293C9 /* ListItemsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F529E240D3ACE001293C9 /* ListItemsViewController.swift */; };
+		C43F52A1240D4347001293C9 /* AddItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F52A0240D4347001293C9 /* AddItemViewController.swift */; };
+		C43F52A3240D4591001293C9 /* RecipeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F52A2240D4591001293C9 /* RecipeType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C41DBE6C240D57C40064EAC0 /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		C43F527A240D1897001293C9 /* currie-recipe-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "currie-recipe-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43F527D240D1897001293C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C43F527F240D1897001293C9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C43F5281240D1897001293C9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		C43F5284240D1897001293C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C43F5286240D189A001293C9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C43F5289240D189A001293C9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C43F528B240D189A001293C9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C43F5291240D1C2C001293C9 /* recipetypes.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = recipetypes.xml; sourceTree = "<group>"; };
+		C43F5296240D23EA001293C9 /* ItemTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemTableViewCell.swift; sourceTree = "<group>"; };
+		C43F5298240D2419001293C9 /* ItemTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ItemTableViewCell.xib; sourceTree = "<group>"; };
+		C43F529A240D30D8001293C9 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		C43F529C240D36F0001293C9 /* EditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		C43F529E240D3ACE001293C9 /* ListItemsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListItemsViewController.swift; sourceTree = "<group>"; };
+		C43F52A0240D4347001293C9 /* AddItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddItemViewController.swift; sourceTree = "<group>"; };
+		C43F52A2240D4591001293C9 /* RecipeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +72,47 @@
 		C43F527C240D1897001293C9 /* currie-recipe-app */ = {
 			isa = PBXGroup;
 			children = (
+				C43F5295240D2223001293C9 /* Controller */,
+				C43F5294240D221D001293C9 /* View */,
+				C43F5293240D2215001293C9 /* Model */,
 				C43F527D240D1897001293C9 /* AppDelegate.swift */,
 				C43F527F240D1897001293C9 /* SceneDelegate.swift */,
-				C43F5281240D1897001293C9 /* ViewController.swift */,
 				C43F5283240D1897001293C9 /* Main.storyboard */,
 				C43F5286240D189A001293C9 /* Assets.xcassets */,
 				C43F5288240D189A001293C9 /* LaunchScreen.storyboard */,
 				C43F528B240D189A001293C9 /* Info.plist */,
+				C43F5291240D1C2C001293C9 /* recipetypes.xml */,
 			);
 			path = "currie-recipe-app";
+			sourceTree = "<group>";
+		};
+		C43F5293240D2215001293C9 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C43F52A2240D4591001293C9 /* RecipeType.swift */,
+				C41DBE6C240D57C40064EAC0 /* Recipe.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		C43F5294240D221D001293C9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				C43F5296240D23EA001293C9 /* ItemTableViewCell.swift */,
+				C43F5298240D2419001293C9 /* ItemTableViewCell.xib */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		C43F5295240D2223001293C9 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				C43F529A240D30D8001293C9 /* DetailViewController.swift */,
+				C43F529C240D36F0001293C9 /* EditViewController.swift */,
+				C43F529E240D3ACE001293C9 /* ListItemsViewController.swift */,
+				C43F52A0240D4347001293C9 /* AddItemViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -128,6 +176,8 @@
 				C43F528A240D189A001293C9 /* LaunchScreen.storyboard in Resources */,
 				C43F5287240D189A001293C9 /* Assets.xcassets in Resources */,
 				C43F5285240D1897001293C9 /* Main.storyboard in Resources */,
+				C43F5299240D2419001293C9 /* ItemTableViewCell.xib in Resources */,
+				C43F5292240D1C2C001293C9 /* recipetypes.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +188,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C43F5282240D1897001293C9 /* ViewController.swift in Sources */,
+				C43F5297240D23EA001293C9 /* ItemTableViewCell.swift in Sources */,
+				C43F529D240D36F0001293C9 /* EditViewController.swift in Sources */,
+				C43F529B240D30D8001293C9 /* DetailViewController.swift in Sources */,
+				C43F529F240D3ACE001293C9 /* ListItemsViewController.swift in Sources */,
+				C43F52A1240D4347001293C9 /* AddItemViewController.swift in Sources */,
+				C43F52A3240D4591001293C9 /* RecipeType.swift in Sources */,
+				C41DBE6D240D57C40064EAC0 /* Recipe.swift in Sources */,
 				C43F527E240D1897001293C9 /* AppDelegate.swift in Sources */,
 				C43F5280240D1897001293C9 /* SceneDelegate.swift in Sources */,
 			);
