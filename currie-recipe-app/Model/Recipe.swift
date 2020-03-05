@@ -7,11 +7,11 @@
 //
 
 class Recipe: Codable {
-    var name: String = ""
-    var imageLink: String = ""
-    var ingredients: String = ""
-    var steps: String = ""
-    var type: String = ""
+    var name: String
+    var imageLink: String
+    var ingredients: String
+    var steps: String
+    var type: String
     
     init(name: String, imageLink: String, ingredients: String, steps: String, type: String) {
         self.name = name

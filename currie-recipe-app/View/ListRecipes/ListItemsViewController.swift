@@ -8,36 +8,29 @@
 
 import UIKit
 
-class ListItemsController: UIViewController, XMLParserDelegate, UIPickerViewDelegate, UIPickerViewDataSource {
+class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     @IBOutlet weak var listItems: UITableView!
     @IBOutlet weak var pickerView: UIPickerView!
     
     var pickerData:[String] = [String]()
-    var recipes:[Recipe] = []
-    var recipesFilter: [Recipe] = []
+    var recipesVM:[RecipeViewModel] = []
+    var recipesFilterVM: [RecipeViewModel] = []
     var recipeTypes: [RecipeType] = []
-    var name = String()
-    var elementName = String()
     var currentType = "All"
     
-    let defaults = UserDefaults.standard
-    let jsonDecoder = JSONDecoder()
+    let recipeService = RecipeService()
+    let recipeTypeService = RecipeTypeService()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.recipes = read()
+        self.recipesVM = recipeService.read().map({return RecipeViewModel(recipe: $0)})
         listItems.delegate = self
         listItems.dataSource = self
         listItems.register(UINib(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         
         recipeTypes.append(RecipeType(name: "All"))
-        if let path = Bundle.main.url(forResource: "recipetypes", withExtension: "xml") {
-            if let parser = XMLParser(contentsOf: path) {
-                parser.delegate = self
-                parser.parse()
-            }
-        }
+        recipeTypes.append(contentsOf: recipeTypeService.getAllRecipeType())
         
         pickerView.dataSource = self
         pickerView.delegate = self
@@ -48,38 +41,12 @@ class ListItemsController: UIViewController, XMLParserDelegate, UIPickerViewDele
     }
     func filterRecipes(type:String) {
         if( type != "All"){
-            self.recipesFilter = recipes.filter {$0.type == type}
+            self.recipesFilterVM = recipesVM.filter {$0.type == type}
         }else{
-            self.recipesFilter = recipes
+            self.recipesFilterVM = recipesVM
         }
         
     }
-    func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
-            
-            if( elementName == "type"){
-
-                name = String()
-            }
-            
-            self.elementName = elementName
-        }
-        
-        func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
-            if( elementName == "type"){
-                let recipeType = RecipeType(name: name)
-                self.recipeTypes.append(recipeType)
-            }
-        }
-        
-        func parser(_ parser: XMLParser, foundCharacters string: String) {
-            let data = string.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
-
-            if (!data.isEmpty) {
-                if self.elementName == "name" {
-                    name += data
-                }
-            }
-        }
 
         func numberOfComponents(in pickerView: UIPickerView) -> Int {
             1
@@ -100,21 +67,10 @@ class ListItemsController: UIViewController, XMLParserDelegate, UIPickerViewDele
             listItems.reloadData()
         }
 
-    func read() -> [Recipe] {
-        let data = defaults.object(forKey: "recipes")
-        if(data != nil){
-            do{
-                let value = try jsonDecoder.decode([Recipe].self, from: data as! Data)
-                return value
-            } catch let e{
-                print(e)
-            }
-        }
-        return []
-    }
+    
     
     override func viewDidAppear(_ animated: Bool) {
-        self.recipes = read()
+        self.recipesVM = recipeService.read().map({return RecipeViewModel(recipe: $0)})
         filterRecipes(type: currentType)
         listItems.reloadData()
     }
@@ -127,7 +83,7 @@ extension ListItemsController: UITableViewDelegate{
         guard let viewController = storyboard?.instantiateViewController(identifier: "DetailItem") else {
             return
         }
-        viewController.title = recipes[indexPath.row].name
+        viewController.title = recipesFilterVM[indexPath.row].name
         navigationController?.pushViewController(viewController, animated: true)
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -137,27 +93,14 @@ extension ListItemsController: UITableViewDelegate{
 
 extension ListItemsController: UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipesFilter.count
+        return recipesFilterVM.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableViewCell
-        cell.imageRecipe.imageFromUrl(urlString: recipesFilter[indexPath.row].imageLink)
-        cell.name.text = recipesFilter[indexPath.row].name
+        let recipeViewModel = recipesVM[indexPath.row]
+        cell.recipeViewModel = recipeViewModel
         return cell
     }
     
-}
-extension UIImageView {
-    public func imageFromUrl(urlString: String) {
-        if let url = URL(string: urlString) {
-            let request = URLRequest(url: url)
-            NSURLConnection.sendAsynchronousRequest(request, queue: OperationQueue.main) {
-                (response: URLResponse!, data: Data!, error: Error!) -> Void in
-                if(data != nil){
-                    self.image = UIImage(data: data)
-                }
-            }
-        }
-    }
 }

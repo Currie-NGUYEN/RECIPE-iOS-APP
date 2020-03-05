@@ -10,22 +10,22 @@ import UIKit
 
 class DetailViewController: UIViewController {
 
+    //MARK: properties
     @IBOutlet weak var imageRecipe: UIImageView!
     @IBOutlet weak var name: UILabel!
     @IBOutlet weak var type: UILabel!
     @IBOutlet weak var ingredients: UITextView!
     @IBOutlet weak var steps: UITextView!
-    
-    let defaults = UserDefaults.standard
-    let jsonDecoder = JSONDecoder()
-    let jsonEncoder = JSONEncoder()
-    
+
     var recipes: [Recipe] = []
+
+    let recipeService = RecipeService()
     
+    //MARK: init
     override func viewDidLoad() {
         super.viewDidLoad()
         let name = self.title
-        self.recipes = read()
+        self.recipes = recipeService.read()
         for recipe in recipes {
             if recipe.name == name! {
                 self.imageRecipe.imageFromUrl(urlString: recipe.imageLink)
@@ -40,7 +40,7 @@ class DetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         let name = self.title
-        let recipes = read()
+        let recipes = recipeService.read()
         for recipe in recipes {
             if recipe.name == name! {
                 self.imageRecipe.imageFromUrl(urlString: recipe.imageLink)
@@ -52,6 +52,7 @@ class DetailViewController: UIViewController {
         }
     }
     
+    //MARK: handler
     @IBAction func deleteItem(_ sender: Any) {
         let alert = UIAlertController(title: "DELETE", message: "Are you sure to remove it?", preferredStyle: .alert)
 
@@ -70,29 +71,8 @@ class DetailViewController: UIViewController {
             }
             i += 1
         }
-        save()
+        recipeService.save(recipes: recipes)
         navigationController?.popViewController(animated: true)
-    }
-    
-    func save() {
-        print(recipes[0].type)
-        do{
-            let value = try jsonEncoder.encode(self.recipes)
-            defaults.set(value, forKey: "recipes")
-        } catch let e{
-            print(e)
-        }
-    }
-    
-    func read() -> [Recipe] {
-        let data = defaults.object(forKey: "recipes")
-        do{
-            let value = try jsonDecoder.decode([Recipe].self, from: data as! Data)
-            return value
-        } catch let e{
-            print(e)
-        }
-        return []
     }
     
     @IBAction func edit(_ sender: UIButton) {
@@ -102,14 +82,5 @@ class DetailViewController: UIViewController {
         viewController.title = self.title
         navigationController?.pushViewController(viewController, animated: true)
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
