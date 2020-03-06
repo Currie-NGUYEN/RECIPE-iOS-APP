@@ -7,3 +7,10 @@
 //
 
 import Foundation
+
+class RecipeAddViewModel {
+    
+    func addRecipe(recipe: Recipe) {
+        
+    }
+}

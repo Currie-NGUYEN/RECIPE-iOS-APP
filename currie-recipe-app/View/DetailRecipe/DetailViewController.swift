@@ -17,18 +17,21 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var ingredients: UITextView!
     @IBOutlet weak var steps: UITextView!
 
-    var recipes: [Recipe] = []
-
+    var recipesVM: [RecipeViewModel] = []
+    var recipe: RecipeViewModel!
+    
     let recipeService = RecipeService()
     
     //MARK: init
     override func viewDidLoad() {
         super.viewDidLoad()
         let name = self.title
-        self.recipes = recipeService.read()
-        for recipe in recipes {
+        recipeService.deleteRecipeServiceDelegate = self
+        self.recipesVM = recipeService.read()
+        for recipe in recipesVM {
             if recipe.name == name! {
-                self.imageRecipe.imageFromUrl(urlString: recipe.imageLink)
+                self.recipe = recipe
+                self.imageRecipe.imageFromUrl(urlString: recipe.image)
                 self.name.text = recipe.name
                 self.type.text = recipe.type
                 self.ingredients.text = recipe.ingredients
@@ -40,10 +43,10 @@ class DetailViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         let name = self.title
-        let recipes = recipeService.read()
-        for recipe in recipes {
+        let recipesVM = recipeService.read()
+        for recipe in recipesVM {
             if recipe.name == name! {
-                self.imageRecipe.imageFromUrl(urlString: recipe.imageLink)
+                self.imageRecipe.imageFromUrl(urlString: recipe.image)
                 self.name.text = recipe.name
                 self.type.text = recipe.type
                 self.ingredients.text = recipe.ingredients
@@ -63,16 +66,7 @@ class DetailViewController: UIViewController {
     }
     
     func deleteHandler(alert: UIAlertAction!) {
-        var i = 0
-        for recipe in recipes {
-            if recipe.name == self.title {
-                recipes.remove(at: i)
-                break
-            }
-            i += 1
-        }
-        recipeService.save(recipes: recipes)
-        navigationController?.popViewController(animated: true)
+        recipeService.delete(recipeDelete: self.recipe)
     }
     
     @IBAction func edit(_ sender: UIButton) {
@@ -83,4 +77,12 @@ class DetailViewController: UIViewController {
         navigationController?.pushViewController(viewController, animated: true)
     }
 
+}
+extension DetailViewController: DeleteRecipeServiceDelegate{
+    
+    func didDeleteRecipe() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    
 }

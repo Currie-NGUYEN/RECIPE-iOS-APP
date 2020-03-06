@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import RxSwift
+import RxCocoa
 
 class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
@@ -14,93 +16,72 @@ class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var pickerView: UIPickerView!
     
     var pickerData:[String] = [String]()
-    var recipesVM:[RecipeViewModel] = []
-    var recipesFilterVM: [RecipeViewModel] = []
-    var recipeTypes: [RecipeType] = []
+    var recipesVM: [RecipeViewModel] = []
+    var recipesFilterVM = Variable<[RecipeViewModel]>([])
+    var recipeTypesVM: [RecipeTypeViewModel] = []
     var currentType = "All"
     
     let recipeService = RecipeService()
     let recipeTypeService = RecipeTypeService()
+    let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.recipesVM = recipeService.read().map({return RecipeViewModel(recipe: $0)})
-        listItems.delegate = self
-        listItems.dataSource = self
+        self.recipesVM = recipeService.read()
+        filterRecipes(type: currentType)
+        
         listItems.register(UINib(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         
-        recipeTypes.append(RecipeType(name: "All"))
-        recipeTypes.append(contentsOf: recipeTypeService.getAllRecipeType())
+        recipeTypesVM.append(RecipeTypeViewModel(recipeType: RecipeType(name: "All")))
+        recipeTypesVM.append(contentsOf: recipeTypeService.getAllRecipeType())
         
         pickerView.dataSource = self
         pickerView.delegate = self
         pickerView.selectRow(0, inComponent: 0, animated: true)
         
-        filterRecipes(type: currentType)
-        // Do any additional setup after loading the view.
+        recipesFilterVM.asObservable().bind(to: listItems.rx.items(cellIdentifier: "cell", cellType: ItemTableViewCell.self)) {_, recipeViewModel, cell in
+            print("ss")
+            cell.recipeViewModel = recipeViewModel
+        }.disposed(by: disposeBag)
+        
+        listItems.rx.modelSelected(RecipeViewModel.self).subscribe(onNext: { recipe in
+            guard let viewController = self.storyboard?.instantiateViewController(identifier: "DetailItem") else {
+                return
+            }
+            viewController.title = recipe.name
+            self.navigationController?.pushViewController(viewController, animated: true)
+            }).disposed(by: disposeBag)
+        listItems.rowHeight = 120
     }
+    
     func filterRecipes(type:String) {
         if( type != "All"){
-            self.recipesFilterVM = recipesVM.filter {$0.type == type}
+            self.recipesFilterVM.value = self.recipesVM.filter {$0.type == type}
         }else{
-            self.recipesFilterVM = recipesVM
+            self.recipesFilterVM.value = self.recipesVM
         }
-        
     }
 
-        func numberOfComponents(in pickerView: UIPickerView) -> Int {
-            1
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-            return recipeTypes.count
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-            return recipeTypes[row].name
-        }
-        
-        func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    //        print(recipeTypes[row].name)
-            self.currentType = recipeTypes[row].name
-            filterRecipes(type: currentType)
-            listItems.reloadData()
-        }
-
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
     
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return recipeTypesVM.count
+    }
     
-    override func viewDidAppear(_ animated: Bool) {
-        self.recipesVM = recipeService.read().map({return RecipeViewModel(recipe: $0)})
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return recipeTypesVM[row].name
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        print(recipeTypesVM[row].name)
+        self.currentType = recipeTypesVM[row].name
         filterRecipes(type: currentType)
-        listItems.reloadData()
     }
-    
-}
 
-extension ListItemsController: UITableViewDelegate{
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: false)
-        guard let viewController = storyboard?.instantiateViewController(identifier: "DetailItem") else {
-            return
-        }
-        viewController.title = recipesFilterVM[indexPath.row].name
-        navigationController?.pushViewController(viewController, animated: true)
+    override func viewDidAppear(_ animated: Bool) {
+        self.recipesVM = recipeService.read()
+        filterRecipes(type: currentType)
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
-    }
-}
-
-extension ListItemsController: UITableViewDataSource{
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return recipesFilterVM.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") as! ItemTableViewCell
-        let recipeViewModel = recipesVM[indexPath.row]
-        cell.recipeViewModel = recipeViewModel
-        return cell
-    }
-    
 }

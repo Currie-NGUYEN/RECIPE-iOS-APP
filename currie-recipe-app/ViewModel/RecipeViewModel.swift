@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import RxSwift
 
 class RecipeViewModel {
     var name: String
@@ -16,11 +17,17 @@ class RecipeViewModel {
     var ingredients: String
     var steps: String
     
+    let recipeService = RecipeService()
+    
     init(recipe:Recipe) {
         self.name = recipe.name
         self.image = recipe.imageLink
         self.type = recipe.type
         self.ingredients = recipe.ingredients
         self.steps = recipe.steps
+    }
+    
+    static func convertToRecipe(recipeViewModel: RecipeViewModel) -> Recipe {
+        return Recipe(name: recipeViewModel.name, imageLink: recipeViewModel.image, ingredients: recipeViewModel.ingredients, steps: recipeViewModel.steps, type: recipeViewModel.type)
     }
 }

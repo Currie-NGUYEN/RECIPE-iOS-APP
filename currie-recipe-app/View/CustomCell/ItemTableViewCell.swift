@@ -15,8 +15,9 @@ class ItemTableViewCell: UITableViewCell {
     
     var recipeViewModel: RecipeViewModel! {
         didSet{
-            imageRecipe.imageFromUrl(urlString: recipeViewModel.image)
-            name.text = recipeViewModel.name
+            print(self.recipeViewModel.image)
+            self.imageRecipe.imageFromUrl(urlString: self.recipeViewModel.image)
+            self.name.text = self.recipeViewModel.name
         }
     }
     
@@ -40,6 +41,8 @@ extension UIImageView {
                 (response: URLResponse!, data: Data!, error: Error!) -> Void in
                 if(data != nil){
                     self.image = UIImage(data: data)
+                }else{
+                    self.image = UIImage(named: "ImageError")
                 }
             }
         }

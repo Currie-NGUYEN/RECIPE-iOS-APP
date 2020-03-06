@@ -13,7 +13,7 @@ class RecipeTypeService: NSObject, XMLParserDelegate {
     //MARK: properties
     var name = String()
     var elementName = String()
-    var recipeTypes: [RecipeType] = []
+    var recipeTypesVM: [RecipeTypeViewModel] = []
     
     //MARK: init
     override init() {
@@ -27,8 +27,8 @@ class RecipeTypeService: NSObject, XMLParserDelegate {
     }
     
     //MARK: handler
-    func getAllRecipeType() -> [RecipeType] {
-        return recipeTypes
+    func getAllRecipeType() -> [RecipeTypeViewModel] {
+        return recipeTypesVM
     }
     
     func parser(_ parser: XMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String] = [:]) {
@@ -44,7 +44,7 @@ class RecipeTypeService: NSObject, XMLParserDelegate {
     func parser(_ parser: XMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if( elementName == "type"){
             let recipeType = RecipeType(name: name)
-            self.recipeTypes.append(recipeType)
+            self.recipeTypesVM.append(RecipeTypeViewModel(recipeType: recipeType))
         }
     }
     
