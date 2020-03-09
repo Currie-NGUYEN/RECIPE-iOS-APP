@@ -16,43 +16,38 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var type: UILabel!
     @IBOutlet weak var ingredients: UITextView!
     @IBOutlet weak var steps: UITextView!
-
-    var recipesVM: [RecipeViewModel] = []
-    var recipe: RecipeViewModel!
     
-    let recipeService = RecipeService()
-    
+    let detailRecipeVM = DetailRecipeViewModel()
+    let deleteRecipeVM = DeleteRecipeViewModel()
+    var recipe: RecipeViewModel? = nil
+    var nameTitle: String? = nil
     //MARK: init
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        let name = self.title
-        recipeService.deleteRecipeServiceDelegate = self
-        self.recipesVM = recipeService.read()
-        for recipe in recipesVM {
-            if recipe.name == name! {
-                self.recipe = recipe
-                self.imageRecipe.imageFromUrl(urlString: recipe.image)
-                self.name.text = recipe.name
-                self.type.text = recipe.type
-                self.ingredients.text = recipe.ingredients
-                self.steps.text = recipe.steps
-            }
-        }
+        
+        self.deleteRecipeVM.deleteRecipeViewModelDelegate = self
+        
+        self.nameTitle = self.title
+        self.recipe = detailRecipeVM.getDetailRecipe(name: nameTitle!)!
+        
+        self.imageRecipe.imageFromUrl(urlString: recipe!.image)
+        self.name.text = recipe!.name
+        self.type.text = recipe!.type
+        self.ingredients.text = recipe!.ingredients
+        self.steps.text = recipe!.steps
+         
         // Do any additional setup after loading the view.
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let name = self.title
-        let recipesVM = recipeService.read()
-        for recipe in recipesVM {
-            if recipe.name == name! {
-                self.imageRecipe.imageFromUrl(urlString: recipe.image)
-                self.name.text = recipe.name
-                self.type.text = recipe.type
-                self.ingredients.text = recipe.ingredients
-                self.steps.text = recipe.steps
-            }
-        }
+        recipe = detailRecipeVM.getDetailRecipe(name: nameTitle!)!
+        self.imageRecipe.imageFromUrl(urlString: recipe!.image)
+        self.name.text = recipe!.name
+        self.type.text = recipe!.type
+        self.ingredients.text = recipe!.ingredients
+        self.steps.text = recipe!.steps
+     
     }
     
     //MARK: handler
@@ -66,7 +61,7 @@ class DetailViewController: UIViewController {
     }
     
     func deleteHandler(alert: UIAlertAction!) {
-        recipeService.delete(recipeDelete: self.recipe)
+        deleteRecipeVM.deleteRecipe(recipe: self.recipe!)
     }
     
     @IBAction func edit(_ sender: UIButton) {
@@ -78,7 +73,7 @@ class DetailViewController: UIViewController {
     }
 
 }
-extension DetailViewController: DeleteRecipeServiceDelegate{
+extension DetailViewController: DeleteRecipeViewModelDelegate{
     
     func didDeleteRecipe() {
         navigationController?.popViewController(animated: true)

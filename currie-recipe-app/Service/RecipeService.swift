@@ -9,15 +9,6 @@
 import Foundation
 import UIKit
 
-protocol DeleteRecipeServiceDelegate {
-    func didDeleteRecipe()
-}
-
-protocol UpdateRecipeServiceDelegate {
-    func didUpdateRecipe()
-}
-
-
 class RecipeService {
     
     //MARK: properties
@@ -25,16 +16,20 @@ class RecipeService {
     let jsonDecoder = JSONDecoder()
     let jsonEncoder = JSONEncoder()
     
-    var deleteRecipeServiceDelegate: DeleteRecipeServiceDelegate?
-    var updateRecipeServiceDelegate: UpdateRecipeServiceDelegate?
+    
     
     //MARK: handler
-    func read() -> [RecipeViewModel] {
+    func read(filterType: String?) -> [RecipeViewModel] {
         let data = defaults.object(forKey: "recipes")
         if(data != nil){
             do{
                 let value = try jsonDecoder.decode([Recipe].self, from: data as! Data)
-                let valueConvert = value.map{RecipeViewModel(recipe: $0)}
+                var valueConvert:[RecipeViewModel]
+                if(filterType != nil){
+                   valueConvert = value.filter{$0.type == filterType}.map{RecipeViewModel(recipe: $0)}
+                } else {
+                    valueConvert = value.map{RecipeViewModel(recipe: $0)}
+                }
                 return valueConvert
             } catch let e{
                 print(e)
@@ -44,7 +39,7 @@ class RecipeService {
     }
     
     func save(recipe: RecipeViewModel) {
-        var recipes = read()
+        var recipes = read(filterType: nil)
         recipes.append(recipe)
         do{
             let recipesConvert = recipes.map{RecipeViewModel.convertToRecipe(recipeViewModel: $0)}
@@ -56,7 +51,7 @@ class RecipeService {
     }
     
     func delete(recipeDelete: RecipeViewModel) {
-        var recipesVM = read()
+        var recipesVM = read(filterType: nil)
         var i = 0
         for recipe in recipesVM {
             if recipe.name == recipeDelete.name {
@@ -66,7 +61,7 @@ class RecipeService {
             i += 1
         }
         updateListRecipes(recipesVM: recipesVM)
-        deleteRecipeServiceDelegate?.didDeleteRecipe()
+//        deleteRecipeServiceDelegate?.didDeleteRecipe()
     }
     
     func updateListRecipes(recipesVM: [RecipeViewModel]) {
@@ -80,7 +75,7 @@ class RecipeService {
     }
     
     func update(recipeUpdate: RecipeViewModel) {
-        var recipesVM = read()
+        var recipesVM = read(filterType: nil)
         print(recipeUpdate.name)
         var i = 0
         print()
@@ -93,6 +88,6 @@ class RecipeService {
             i += 1
         }
         updateListRecipes(recipesVM: recipesVM)
-        updateRecipeServiceDelegate?.didUpdateRecipe()
+//        updateRecipeServiceDelegate?.didUpdateRecipe()
     }
 }

@@ -19,19 +19,17 @@ class AddItemViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     var recipeTypesVM: [RecipeTypeViewModel] = []
     var type: String = ""
-    var recipesVM: [RecipeViewModel] = []
     
-    let recipeService = RecipeService()
-    let recipeTypeService = RecipeTypeService()
+    let addRecipeVM = AddRecipeViewModel()
     
     //MARK: init
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recipesVM = recipeService.read()
+        addRecipeVM.addRecipeViewModelDelegate = self
         picker.dataSource = self
         picker.delegate = self
-        recipeTypesVM = recipeTypeService.getAllRecipeType()
+        self.recipeTypesVM = RecipeTypeViewModel.getAllType()
         self.type = recipeTypesVM[0].name
         self.picker.selectRow(0, inComponent: 0, animated: true)
     }
@@ -56,12 +54,7 @@ class AddItemViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     
     @IBAction func addItem(_ sender: UIButton) {
         let recipe = Recipe(name: nameRecipe.text!, imageLink: imageLink.text!, ingredients: ingredients.text!, steps: steps.text!, type: self.type)
-        
-        DispatchQueue.main.async {
-            self.recipeService.save(recipe: RecipeViewModel(recipe: recipe))
-            self.navigationController?.popViewController(animated: true)
-        }
-       
+        self.addRecipeVM.addRecipe(recipe: RecipeViewModel(recipe: recipe))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -69,4 +62,10 @@ class AddItemViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     }
 }
 
+extension AddItemViewController: AddRecipeViewModelDelegate{
+    func didAddRecipe() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+}
 

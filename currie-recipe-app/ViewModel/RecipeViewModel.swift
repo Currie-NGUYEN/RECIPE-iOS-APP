@@ -19,6 +19,7 @@ class RecipeViewModel {
     
     let recipeService = RecipeService()
     
+    
     init(recipe:Recipe) {
         self.name = recipe.name
         self.image = recipe.imageLink

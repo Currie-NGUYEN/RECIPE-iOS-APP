@@ -12,4 +12,9 @@ struct RecipeTypeViewModel {
     init(recipeType: RecipeType) {
         self.name = recipeType.name
     }
+    
+    static func getAllType() -> [RecipeTypeViewModel] {
+        let recipeTypeService = RecipeTypeService()
+        return recipeTypeService.getAllRecipeType()
+    }
 }

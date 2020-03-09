@@ -17,41 +17,42 @@ class EditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     @IBOutlet weak var ingredients: UITextView!
     @IBOutlet weak var steps: UITextView!
     
-    let recipeService = RecipeService()
-    let recipeTypeService = RecipeTypeService()
+//    let recipeService = RecipeService()
+//    let recipeTypeService = RecipeTypeService()
+    let detailRecipeVM = DetailRecipeViewModel()
+    let editRecipeVM = EditRecipeViewModel()
     
-    var recipesVM:[RecipeViewModel] = []
+    public var recipe:RecipeViewModel?
     var recipeTypesVM: [RecipeTypeViewModel] = []
-    var recipeType: String = ""
+    var recipeType: String?
+    var nameTitle: String?
     
     //MARK: init
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        recipeService.updateRecipeServiceDelegate = self
-        let name = self.title
+        self.nameTitle = self.title
         pickerType.dataSource = self
         pickerType.delegate = self
-        recipesVM = recipeService.read()
-        recipeTypesVM = recipeTypeService.getAllRecipeType()
-        for recipe in recipesVM {
-            if recipe.name == name! {
-                self.imageRecipe.text = recipe.image
-                self.name.text = recipe.name
-                recipeType = recipe.type
-                let tmpType = RecipeType(name: recipe.type)
-                let defaultType = recipeTypesVM.lastIndex { $0.name == tmpType.name }
-                self.pickerType.selectRow(defaultType ?? 0, inComponent: 0, animated: true)
-                self.ingredients.text = recipe.ingredients
-                self.steps.text = recipe.steps
-            }
-        }
+        editRecipeVM.updateRecipeViewModelDelegate = self
+        recipeTypesVM = RecipeTypeViewModel.getAllType()
+        
+        self.recipe = detailRecipeVM.getDetailRecipe(name: self.nameTitle!)
+        self.imageRecipe.text = recipe!.image
+        self.name.text = recipe!.name
+        recipeType = recipe!.type
+        let tmpType = RecipeType(name: recipe!.type)
+        let defaultType = recipeTypesVM.lastIndex { $0.name == tmpType.name }
+        self.pickerType.selectRow(defaultType ?? 0, inComponent: 0, animated: true)
+        self.ingredients.text = recipe!.ingredients
+        self.steps.text = recipe!.steps
+       
     }
     
     //MARK: handler
     @IBAction func done(_ sender: UIButton) {
-        let recipeUpdate = RecipeViewModel(recipe: Recipe(name: self.title!, imageLink: self.imageRecipe.text!, ingredients: self.ingredients.text!, steps: self.steps.text!, type: recipeType))
-        recipeService.update(recipeUpdate: recipeUpdate)
+        let recipeUpdate = RecipeViewModel(recipe: Recipe(name: self.title!, imageLink: self.imageRecipe.text!, ingredients: self.ingredients.text!, steps: self.steps.text!, type: recipeType!))
+        editRecipeVM.editRecipe(recipe: recipeUpdate)
         
     }
     
@@ -71,13 +72,13 @@ class EditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         self.recipeType = recipeTypesVM[row].name
-        print(recipeType)
+//        print(recipeType)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
 }
-extension EditViewController: UpdateRecipeServiceDelegate{
+extension EditViewController: UpdateRecipeViewModelDelegate{
     
     func didUpdateRecipe() {
         navigationController?.popViewController(animated: true)
