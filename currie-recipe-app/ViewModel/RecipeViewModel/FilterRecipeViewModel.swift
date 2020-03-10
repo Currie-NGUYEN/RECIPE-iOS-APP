@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import Resolver
 
 class FilterRecipeViewModel {
     
     //MARK: properties
-    let recipeService = RecipeService()
+    @Injected var recipeService: RecipeServiceProtocol
+    
     
     //MARK: Handler
     func filterRecipe(typeName: String?) -> [RecipeViewModel] {

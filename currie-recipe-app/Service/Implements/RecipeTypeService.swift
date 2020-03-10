@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RecipeTypeService: NSObject, XMLParserDelegate {
+class RecipeTypeService: NSObject, XMLParserDelegate, RecipeTypeServiceProtocol {
     
     //MARK: properties
     var name = String()

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Resolver
 
 protocol  AddRecipeViewModelDelegate{
     func didAddRecipe()
@@ -15,7 +16,7 @@ protocol  AddRecipeViewModelDelegate{
 class AddRecipeViewModel {
     
     //MARK: properties
-    let recipeService = RecipeService()
+    @Injected var recipeService: RecipeServiceProtocol
     var addRecipeViewModelDelegate:AddRecipeViewModelDelegate?
     
     //MARK: handler

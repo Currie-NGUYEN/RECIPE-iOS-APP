@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class RecipeService {
+class RecipeService: RecipeServiceProtocol {
     
     //MARK: properties
     let defaults = UserDefaults.standard
@@ -91,3 +91,4 @@ class RecipeService {
 //        updateRecipeServiceDelegate?.didUpdateRecipe()
     }
 }
+

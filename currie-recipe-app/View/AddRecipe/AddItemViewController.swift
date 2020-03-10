@@ -21,6 +21,7 @@ class AddItemViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
     var type: String = ""
     
     let addRecipeVM = AddRecipeViewModel()
+    let getAllRecipeTypesVM = GetAllRecipeTypesViewModel()
     
     //MARK: init
     override func viewDidLoad() {
@@ -29,7 +30,7 @@ class AddItemViewController: UIViewController, UIPickerViewDelegate, UIPickerVie
         addRecipeVM.addRecipeViewModelDelegate = self
         picker.dataSource = self
         picker.delegate = self
-        self.recipeTypesVM = RecipeTypeViewModel.getAllType()
+        self.recipeTypesVM = getAllRecipeTypesVM.getAllType()
         self.type = recipeTypesVM[0].name
         self.picker.selectRow(0, inComponent: 0, animated: true)
     }

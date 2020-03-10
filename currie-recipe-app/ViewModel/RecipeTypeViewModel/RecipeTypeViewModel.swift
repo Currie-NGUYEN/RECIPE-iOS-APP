@@ -13,8 +13,4 @@ struct RecipeTypeViewModel {
         self.name = recipeType.name
     }
     
-    static func getAllType() -> [RecipeTypeViewModel] {
-        let recipeTypeService = RecipeTypeService()
-        return recipeTypeService.getAllRecipeType()
-    }
 }

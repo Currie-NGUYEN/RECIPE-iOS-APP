@@ -8,4 +8,5 @@ target 'currie-recipe-app' do
   # Pods for currie-recipe-app
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'Resolver'
 end

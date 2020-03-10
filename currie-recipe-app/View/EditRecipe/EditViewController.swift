@@ -21,6 +21,7 @@ class EditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
 //    let recipeTypeService = RecipeTypeService()
     let detailRecipeVM = DetailRecipeViewModel()
     let editRecipeVM = EditRecipeViewModel()
+    let getAllRecipeTypesVM = GetAllRecipeTypesViewModel()
     
     public var recipe:RecipeViewModel?
     var recipeTypesVM: [RecipeTypeViewModel] = []
@@ -35,7 +36,7 @@ class EditViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDa
         pickerType.dataSource = self
         pickerType.delegate = self
         editRecipeVM.updateRecipeViewModelDelegate = self
-        recipeTypesVM = RecipeTypeViewModel.getAllType()
+        recipeTypesVM = getAllRecipeTypesVM.getAllType()
         
         self.recipe = detailRecipeVM.getDetailRecipe(name: self.nameTitle!)
         self.imageRecipe.text = recipe!.image

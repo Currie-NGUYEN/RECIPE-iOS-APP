@@ -21,6 +21,7 @@ class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     var currentType = "All"
     
     let filterRecipeVM = FilterRecipeViewModel()
+    let getAllRecipeTypesVM = GetAllRecipeTypesViewModel()
     let disposeBag = DisposeBag()
     
     override func viewDidLoad() {
@@ -30,7 +31,7 @@ class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         listItems.register(UINib(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         
         recipeTypesVM.append(RecipeTypeViewModel(recipeType: RecipeType(name: "All")))
-        recipeTypesVM.append(contentsOf: RecipeTypeViewModel.getAllType())
+        recipeTypesVM.append(contentsOf: getAllRecipeTypesVM.getAllType())
         
         pickerView.dataSource = self
         pickerView.delegate = self

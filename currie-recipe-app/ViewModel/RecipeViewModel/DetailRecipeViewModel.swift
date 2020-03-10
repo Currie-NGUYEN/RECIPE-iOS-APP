@@ -7,11 +7,12 @@
 //
 
 import Foundation
+import Resolver
 
 class DetailRecipeViewModel {
     
     //MARK: properties
-    let recipeService = RecipeService()
+    @Injected var recipeService: RecipeServiceProtocol
     let filterRecipeVM = FilterRecipeViewModel()
     
     //MARK: handler

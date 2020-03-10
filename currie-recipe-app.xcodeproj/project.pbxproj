@@ -15,6 +15,10 @@
 		C41F896F2416141A00C4DCFF /* AddRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41F896E2416141A00C4DCFF /* AddRecipeViewModel.swift */; };
 		C41F897124161CC300C4DCFF /* DeleteRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41F897024161CC300C4DCFF /* DeleteRecipeViewModel.swift */; };
 		C41F897324161DA300C4DCFF /* DetailRecipeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41F897224161DA300C4DCFF /* DetailRecipeViewModel.swift */; };
+		C41F897624176B7400C4DCFF /* ResolverRegisteringExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41F897524176B7400C4DCFF /* ResolverRegisteringExtension.swift */; };
+		C41F897824176CCA00C4DCFF /* GetAllRecipeTypesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41F897724176CCA00C4DCFF /* GetAllRecipeTypesViewModel.swift */; };
+		C41F897A24176EAB00C4DCFF /* RecipeServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41F897924176EAB00C4DCFF /* RecipeServiceProtocol.swift */; };
+		C41F897C24176ECA00C4DCFF /* RecipeTypeServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = C41F897B24176ECA00C4DCFF /* RecipeTypeServiceProtocol.swift */; };
 		C43F527E240D1897001293C9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F527D240D1897001293C9 /* AppDelegate.swift */; };
 		C43F5280240D1897001293C9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C43F527F240D1897001293C9 /* SceneDelegate.swift */; };
 		C43F5285240D1897001293C9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C43F5283240D1897001293C9 /* Main.storyboard */; };
@@ -43,6 +47,10 @@
 		C41F896E2416141A00C4DCFF /* AddRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddRecipeViewModel.swift; sourceTree = "<group>"; };
 		C41F897024161CC300C4DCFF /* DeleteRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteRecipeViewModel.swift; sourceTree = "<group>"; };
 		C41F897224161DA300C4DCFF /* DetailRecipeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailRecipeViewModel.swift; sourceTree = "<group>"; };
+		C41F897524176B7400C4DCFF /* ResolverRegisteringExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResolverRegisteringExtension.swift; sourceTree = "<group>"; };
+		C41F897724176CCA00C4DCFF /* GetAllRecipeTypesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetAllRecipeTypesViewModel.swift; sourceTree = "<group>"; };
+		C41F897924176EAB00C4DCFF /* RecipeServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeServiceProtocol.swift; sourceTree = "<group>"; };
+		C41F897B24176ECA00C4DCFF /* RecipeTypeServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTypeServiceProtocol.swift; sourceTree = "<group>"; };
 		C43F527A240D1897001293C9 /* currie-recipe-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "currie-recipe-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C43F527D240D1897001293C9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C43F527F240D1897001293C9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -91,6 +99,46 @@
 				8C247C404CA8E13EFD563265 /* Pods_currie_recipe_app.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C41F897D24176F0900C4DCFF /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				C41F897924176EAB00C4DCFF /* RecipeServiceProtocol.swift */,
+				C41F897B24176ECA00C4DCFF /* RecipeTypeServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		C41F897E24176F1400C4DCFF /* Implements */ = {
+			isa = PBXGroup;
+			children = (
+				C4A789212410E27300A99B08 /* RecipeService.swift */,
+				C4A789232410E34800A99B08 /* RecipeTypeService.swift */,
+			);
+			path = Implements;
+			sourceTree = "<group>";
+		};
+		C41F897F24176F3F00C4DCFF /* RecipeViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C4A789252410EB8200A99B08 /* RecipeViewModel.swift */,
+				C41F896A241613DF00C4DCFF /* EditRecipeViewModel.swift */,
+				C41F896C241613FB00C4DCFF /* FilterRecipeViewModel.swift */,
+				C41F896E2416141A00C4DCFF /* AddRecipeViewModel.swift */,
+				C41F897024161CC300C4DCFF /* DeleteRecipeViewModel.swift */,
+				C41F897224161DA300C4DCFF /* DetailRecipeViewModel.swift */,
+			);
+			path = RecipeViewModel;
+			sourceTree = "<group>";
+		};
+		C41F898024176F4D00C4DCFF /* RecipeTypeViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C41F89682411EE1000C4DCFF /* RecipeTypeViewModel.swift */,
+				C41F897724176CCA00C4DCFF /* GetAllRecipeTypesViewModel.swift */,
+			);
+			path = RecipeTypeViewModel;
 			sourceTree = "<group>";
 		};
 		C43F5271240D1897001293C9 = {
@@ -161,13 +209,8 @@
 		C4A7891F2410DCEC00A99B08 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				C4A789252410EB8200A99B08 /* RecipeViewModel.swift */,
-				C41F89682411EE1000C4DCFF /* RecipeTypeViewModel.swift */,
-				C41F896A241613DF00C4DCFF /* EditRecipeViewModel.swift */,
-				C41F896C241613FB00C4DCFF /* FilterRecipeViewModel.swift */,
-				C41F896E2416141A00C4DCFF /* AddRecipeViewModel.swift */,
-				C41F897024161CC300C4DCFF /* DeleteRecipeViewModel.swift */,
-				C41F897224161DA300C4DCFF /* DetailRecipeViewModel.swift */,
+				C41F898024176F4D00C4DCFF /* RecipeTypeViewModel */,
+				C41F897F24176F3F00C4DCFF /* RecipeViewModel */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -175,8 +218,8 @@
 		C4A789202410E23D00A99B08 /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				C4A789212410E27300A99B08 /* RecipeService.swift */,
-				C4A789232410E34800A99B08 /* RecipeTypeService.swift */,
+				C41F897E24176F1400C4DCFF /* Implements */,
+				C41F897D24176F0900C4DCFF /* Protocols */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -218,6 +261,7 @@
 			children = (
 				C43F5291240D1C2C001293C9 /* recipetypes.xml */,
 				C43F527D240D1897001293C9 /* AppDelegate.swift */,
+				C41F897524176B7400C4DCFF /* ResolverRegisteringExtension.swift */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -341,6 +385,7 @@
 			files = (
 				C41F896F2416141A00C4DCFF /* AddRecipeViewModel.swift in Sources */,
 				C43F5297240D23EA001293C9 /* ItemTableViewCell.swift in Sources */,
+				C41F897824176CCA00C4DCFF /* GetAllRecipeTypesViewModel.swift in Sources */,
 				C41F896D241613FB00C4DCFF /* FilterRecipeViewModel.swift in Sources */,
 				C43F529D240D36F0001293C9 /* EditViewController.swift in Sources */,
 				C43F529B240D30D8001293C9 /* DetailViewController.swift in Sources */,
@@ -350,11 +395,14 @@
 				C43F52A1240D4347001293C9 /* AddItemViewController.swift in Sources */,
 				C43F52A3240D4591001293C9 /* RecipeType.swift in Sources */,
 				C41F89692411EE1000C4DCFF /* RecipeTypeViewModel.swift in Sources */,
+				C41F897A24176EAB00C4DCFF /* RecipeServiceProtocol.swift in Sources */,
+				C41F897C24176ECA00C4DCFF /* RecipeTypeServiceProtocol.swift in Sources */,
 				C41F896B241613DF00C4DCFF /* EditRecipeViewModel.swift in Sources */,
 				C4A789242410E34800A99B08 /* RecipeTypeService.swift in Sources */,
 				C41DBE6D240D57C40064EAC0 /* Recipe.swift in Sources */,
 				C4A789222410E27300A99B08 /* RecipeService.swift in Sources */,
 				C41F897124161CC300C4DCFF /* DeleteRecipeViewModel.swift in Sources */,
+				C41F897624176B7400C4DCFF /* ResolverRegisteringExtension.swift in Sources */,
 				C43F527E240D1897001293C9 /* AppDelegate.swift in Sources */,
 				C43F5280240D1897001293C9 /* SceneDelegate.swift in Sources */,
 			);

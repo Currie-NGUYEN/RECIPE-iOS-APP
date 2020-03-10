@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Resolver
 
 protocol DeleteRecipeViewModelDelegate {
     func didDeleteRecipe()
@@ -15,8 +16,8 @@ protocol DeleteRecipeViewModelDelegate {
 class DeleteRecipeViewModel {
     
     //MARK: properties
-    let recipeService = RecipeService()
-    var deleteRecipeViewModelDelegate:DeleteRecipeViewModelDelegate?
+    @Injected var recipeService: RecipeServiceProtocol
+    var deleteRecipeViewModelDelegate: DeleteRecipeViewModelDelegate?
     
     //MARK: handler
     func deleteRecipe(recipe: RecipeViewModel) {
