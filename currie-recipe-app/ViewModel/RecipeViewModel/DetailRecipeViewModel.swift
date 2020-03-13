@@ -13,12 +13,10 @@ class DetailRecipeViewModel {
     
     //MARK: properties
     @Injected var recipeService: RecipeServiceProtocol
-    let filterRecipeVM = FilterRecipeViewModel()
     
     //MARK: handler
     func getDetailRecipe(name: String) -> RecipeViewModel? {
-        let recipesVM = filterRecipeVM.filterRecipe(typeName: nil)
-        for recipe in recipesVM {
+        for recipe in recipeService.read(filterType: nil){
             if recipe.name == name {
                 return recipe
             }

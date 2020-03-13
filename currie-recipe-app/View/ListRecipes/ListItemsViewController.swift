@@ -16,17 +16,17 @@ class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     @IBOutlet weak var pickerView: UIPickerView!
     
     var pickerData:[String] = [String]()
-    var recipesFilterVM = Variable<[RecipeViewModel]>([])
+//    var recipesFilterVM = Variable<[RecipeViewModel]>([])
     var recipeTypesVM: [RecipeTypeViewModel] = []
     var currentType = "All"
     
     let filterRecipeVM = FilterRecipeViewModel()
     let getAllRecipeTypesVM = GetAllRecipeTypesViewModel()
     let disposeBag = DisposeBag()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.recipesFilterVM.value = filterRecipeVM.filterRecipe(typeName: nil)
         
         listItems.register(UINib(nibName: "ItemTableViewCell", bundle: nil), forCellReuseIdentifier: "cell")
         
@@ -37,7 +37,10 @@ class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewD
         pickerView.delegate = self
         pickerView.selectRow(0, inComponent: 0, animated: true)
         
-        recipesFilterVM.asObservable().bind(to: listItems.rx.items(cellIdentifier: "cell", cellType: ItemTableViewCell.self)) {_, recipeViewModel, cell in
+        filterRecipeVM.typeChanged = self.pickerView.rx.itemSelected.asDriver()
+        filterRecipeVM.filterRecipe()
+        
+        filterRecipeVM.recipes.asObservable().bind(to: listItems.rx.items(cellIdentifier: "cell", cellType: ItemTableViewCell.self)) {_, recipeViewModel, cell in
             cell.recipeViewModel = recipeViewModel
         }.disposed(by: disposeBag)
         
@@ -49,6 +52,7 @@ class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewD
             self.navigationController?.pushViewController(viewController, animated: true)
             }).disposed(by: disposeBag)
         listItems.rowHeight = 120
+        
     }
 
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -62,14 +66,8 @@ class ListItemsController: UIViewController, UIPickerViewDelegate, UIPickerViewD
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return recipeTypesVM[row].name
     }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        print(recipeTypesVM[row].name)
-        self.currentType = recipeTypesVM[row].name
-        self.recipesFilterVM.value = filterRecipeVM.filterRecipe(typeName: currentType)
-    }
 
     override func viewDidAppear(_ animated: Bool) {
-        self.recipesFilterVM.value = filterRecipeVM.filterRecipe(typeName: currentType)
+        self.filterRecipeVM.filterRecipe()
     }
 }
